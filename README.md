@@ -1,6 +1,5 @@
-Voici ton README complété proprement avec les informations de connexion, prêt à être poussé sur GitHub.
-
----
+Guillaume Boutigny & Séha Hassane
+TD-1, TP-B
 
 # Mini-Projet – Visites Tuteurs
 
@@ -139,7 +138,4 @@ Ces informations proviennent de la fixture suivante :
 ### **API Platform**
 
 * Ressource Tuteur exposée
-
----
-
 
