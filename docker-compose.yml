@@ -11,7 +11,13 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    command: bash -c "composer install && symfony server:start --no-tls --port=8000"
+    command: bash -c "
+        git config --global --add safe.directory /var/www/apptuteur &&
+        composer install &&
+        php bin/console doctrine:migrations:migrate --no-interaction &&
+        php bin/console doctrine:fixtures:load --no-interaction &&
+        composer start-server
+      "
 
   db:
     image: mysql:8.0

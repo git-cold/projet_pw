@@ -28,6 +28,23 @@ docker compose up -d
 
 ---
 
+## Redémarrage du serveur Symfony
+
+Si vous arrêtez manuellement le serveur Symfony dans le conteneur,
+vous pouvez le relancer rapidement grâce à la commande suivante :
+
+```bash
+composer start-server
+```
+
+Cette commande exécute automatiquement :
+
+```
+symfony server:start --no-tls --port=8000 --allow-all-ip
+```
+
+---
+
 ## Instructions de connexion
 
 ### URL d’accès à l'application

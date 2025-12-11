@@ -21,6 +21,10 @@
             <li class="list-group-item text-muted">Aucun étudiant</li>
         {% endfor %}
     </ul>
+
+    {% if etudiants %}
+        <a href="/etudiants" class="btn btn-primary btn-sm">Voir plus</a>
+    {% endif %}
 </div>
 
 <div class="card p-3 mb-4">
