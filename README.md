@@ -63,3 +63,66 @@ Ces informations proviennent de la fixture suivante :
     $hashedPassword = password_hash('password', PASSWORD_DEFAULT);
     $tuteur->setPassword($hashedPassword);
 ```
+
+## **Stack**
+
+* PHP 8.1 
+* Symfony
+* MySQL 8.0
+* phpMyAdmin
+
+## **Fonctionnalités implémentées**
+
+### **Authentification**
+
+* Connexion par email + mot de passe
+* Déconnexion
+* Mot de passe hashé
+* Session Symfony
+
+### **Étudiants**
+
+* CRUD complet :
+
+  * Ajouter un étudiant
+  * Modifier un étudiant
+  * Supprimer un étudiant
+  * Lister les étudiants du tuteur
+* Association automatique au tuteur connecté
+* Validation via FormTypes
+
+### **Visites**
+
+* CRUD complet :
+
+  * Ajouter une visite (préremplie avec étudiant + tuteur + statut par défaut)
+  * Modifier une visite
+  * Supprimer une visite
+  * Lister les visites d’un étudiant
+* Filtrage par statut :
+
+  * Prévue
+  * Réalisée
+  * Annulée
+* Tri par date (ascendant / descendant)
+* FormType Visite
+
+### **Compte-rendu**
+
+* Ajout / modification du compte-rendu
+* Export PDF via DomPDF
+
+### **Front-end**
+
+* Interface Twig
+* Mise en forme avec Bootstrap
+* Navbar dynamique avec bouton de déconnexion
+* Layout global
+
+### **API Platform**
+
+* Ressource Tuteur exposée
+
+---
+
+
