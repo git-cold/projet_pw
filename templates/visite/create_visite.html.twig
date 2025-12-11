@@ -1,31 +1,14 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
+<h1>Nouvelle visite pour {{ etudiant.prenom }} {{ etudiant.nom }}</h1>
 
-<h2 class="mb-4">Nouvelle visite pour {{ etudiant.prenom }} {{ etudiant.nom }}</h2>
+{{ form_start(form) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.commentaire) }}
+    {{ form_row(form.statut) }}
 
-<form method="post" action="/etudiants/{{ etudiant.id }}/visites/new" class="w-50">
-
-    <div class="mb-3">
-        <label class="form-label">Date</label>
-        <input type="datetime-local" name="date" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Commentaire</label>
-        <textarea name="commentaire" class="form-control" required></textarea>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Statut</label>
-        <select name="statut" class="form-select" required>
-            <option value="prévue" selected>Prévue</option>
-            <option value="réalisée">Réalisée</option>
-            <option value="annulée">Annulée</option>
-        </select>
-    </div>
-
-    <button class="btn btn-success">Enregistrer</button>
-</form>
+    <button class="btn btn-primary">Enregistrer</button>
+{{ form_end(form) }}
 
 {% endblock %}

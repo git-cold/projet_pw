@@ -3,8 +3,8 @@
 namespace App\Controller\etudiant;
 
 use App\Entity\Etudiant;
+use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
-use App\Repository\TuteurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,19 +18,20 @@ class EtudiantUpdateController extends AbstractController
         SessionInterface $session,
         EtudiantRepository $repo
     ): Response {
-        // Vérifier connexion
         $tuteurId = $session->get('tuteur_id');
         if (!$tuteurId) {
             return $this->redirect('/login');
         }
 
-        // Récupérer l'étudiant
         $etudiant = $repo->find($id);
         if (!$etudiant || $etudiant->getTuteur()->getId() !== $tuteurId) {
-            return $this->redirect('/etudiants'); // interdit
+            return $this->redirect('/etudiants');
         }
 
+        $form = $this->createForm(EtudiantType::class, $etudiant);
+
         return $this->render('etudiant/update_etudiant.html.twig', [
+            'form' => $form->createView(),
             'etudiant' => $etudiant,
         ]);
     }
@@ -42,22 +43,25 @@ class EtudiantUpdateController extends AbstractController
         EtudiantRepository $repo,
         EntityManagerInterface $em
     ): Response {
-        // Vérifier connexion
         $tuteurId = $session->get('tuteur_id');
         if (!$tuteurId) {
             return $this->redirect('/login');
         }
 
-        // Récupérer l'étudiant
         $etudiant = $repo->find($id);
         if (!$etudiant || $etudiant->getTuteur()->getId() !== $tuteurId) {
-            return $this->redirect('/etudiants'); // interdit
+            return $this->redirect('/etudiants');
         }
 
-        // Récupération POST
-        $etudiant->setNom($request->request->get('nom'));
-        $etudiant->setPrenom($request->request->get('prenom'));
-        $etudiant->setFormation($request->request->get('formation'));
+        $form = $this->createForm(EtudiantType::class, $etudiant);
+        $form->handleRequest($request);
+
+        if (!($form->isSubmitted() && $form->isValid())) {
+            return $this->render('etudiant/update_etudiant.html.twig', [
+                'form' => $form->createView(),
+                'etudiant' => $etudiant
+            ]);
+        }
 
         $em->flush();
 

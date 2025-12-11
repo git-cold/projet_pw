@@ -1,28 +1,14 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
+<h1>Modifier un étudiant</h1>
 
-<h2 class="mb-4">Modifier un étudiant</h2>
-
-<form method="post" action="/etudiants/{{ etudiant.id }}/edit" class="w-50">
-
-    <div class="mb-3">
-        <label class="form-label">Nom</label>
-        <input type="text" name="nom" class="form-control" value="{{ etudiant.nom }}" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Prénom</label>
-        <input type="text" name="prenom" class="form-control" value="{{ etudiant.prenom }}" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Formation</label>
-        <input type="text" name="formation" class="form-control" value="{{ etudiant.formation }}" required>
-    </div>
+{{ form_start(form) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.prenom) }}
+    {{ form_row(form.formation) }}
 
     <button class="btn btn-primary">Enregistrer</button>
-
-</form>
+{{ form_end(form) }}
 
 {% endblock %}

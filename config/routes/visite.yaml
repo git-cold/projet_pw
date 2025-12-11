@@ -1,4 +1,4 @@
-read_visites_index:
+read_visite_index:
   path: /etudiants/{id}/visites
   controller: App\Controller\visite\VisiteReadController::index
   methods: [GET]
@@ -15,30 +15,30 @@ create_visite_submit:
 
 
 update_visite_index:
-  path: /visites/{id}/edit
+  path: /etudiants/{id}/visites/edit
   controller: App\Controller\visite\VisiteUpdateController::index
   methods: [GET]
 update_visite_submit:
-  path: /visites/{id}/edit
+  path: /etudiants/{id}/visites/edit
   controller: App\Controller\visite\VisiteUpdateController::submit
   methods: [POST]
 
 
 delete_visite:
-  path: /visites/{id}/delete
+  path: /etudiants/{id}/visites/delete
   controller: App\Controller\visite\VisiteDeleteController::delete
   methods: [GET]
 
 
 compte_rendu_visite_index:
-  path: /visites/{id}/compte-rendu
+  path: /etudiants/{id}/visites/compte-rendu
   controller: App\Controller\visite\VisiteCompteRenduController::index
   methods: [GET]
 compte_rendu_visite_submit:
-  path: /visites/{id}/compte-rendu
+  path: /etudiants/{id}/visites/compte-rendu
   controller: App\Controller\visite\VisiteCompteRenduController::submit
   methods: [POST]
 compte_rendu_visite_pdf:
-  path: /visites/{id}/compte-rendu/pdf
+  path: /etudiants/{id}/visites/compte-rendu/pdf
   controller: App\Controller\visite\VisiteCompteRenduController::pdf
   methods: [GET]

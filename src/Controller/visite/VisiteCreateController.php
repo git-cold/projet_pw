@@ -3,6 +3,7 @@
 namespace App\Controller\visite;
 
 use App\Entity\Visite;
+use App\Form\VisiteType;
 use App\Repository\EtudiantRepository;
 use App\Repository\TuteurRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,21 +17,30 @@ class VisiteCreateController extends AbstractController
     public function index(
         int $id,
         SessionInterface $session,
-        EtudiantRepository $etudiantRepo
+        EtudiantRepository $etudiantRepo,
+        TuteurRepository $tuteurRepo
     ): Response {
-        // Vérifier si tuteur connecté
         $tuteurId = $session->get('tuteur_id');
         if (!$tuteurId) {
             return $this->redirect('/login');
         }
 
-        // Vérifier que l'étudiant existe + appartient bien au tuteur
         $etudiant = $etudiantRepo->find($id);
         if (!$etudiant || $etudiant->getTuteur()->getId() !== $tuteurId) {
             return $this->redirect('/etudiants');
         }
 
+        $tuteurConnecte = $tuteurRepo->find($tuteurId);
+
+        $visite = new Visite();
+        $visite->setEtudiant($etudiant);
+        $visite->setTuteur($tuteurConnecte);
+        $visite->setStatut('prévue');
+
+        $form = $this->createForm(VisiteType::class, $visite);
+
         return $this->render('visite/create_visite.html.twig', [
+            'form'     => $form->createView(),
             'etudiant' => $etudiant
         ]);
     }
@@ -43,41 +53,33 @@ class VisiteCreateController extends AbstractController
         TuteurRepository $tuteurRepo,
         EntityManagerInterface $em
     ): Response {
-        // Vérifier si tuteur connecté
         $tuteurId = $session->get('tuteur_id');
         if (!$tuteurId) {
             return $this->redirect('/login');
         }
 
-        $tuteurConnecte = $tuteurRepo->find($tuteurId);
-
-        // Vérifier étudiant
         $etudiant = $etudiantRepo->find($id);
         if (!$etudiant || $etudiant->getTuteur()->getId() !== $tuteurId) {
             return $this->redirect('/etudiants');
         }
 
-        // Récupération POST
-        $date = $request->request->get('date');
-        $commentaire = $request->request->get('commentaire');
-        $statut = $request->request->get('statut');
+        $tuteurConnecte = $tuteurRepo->find($tuteurId);
 
-        // Sécurisation du statut
-        if (!in_array($statut, ['prévue', 'réalisée', 'annulée'])) {
-            $statut = 'prévue';
-        }
-
-        // Création visite
         $visite = new Visite();
-        $visite->setDate(new \DateTimeImmutable($date));
-        $visite->setCommentaire($commentaire);
-        $visite->setStatut($statut);
-
-        // Préremplissage automatique
         $visite->setEtudiant($etudiant);
         $visite->setTuteur($tuteurConnecte);
+        $visite->setStatut('prévue');
 
-        // Sauvegarde
+        $form = $this->createForm(VisiteType::class, $visite);
+        $form->handleRequest($request);
+
+        if (!($form->isSubmitted() && $form->isValid())) {
+            return $this->render('visite/create_visite.html.twig', [
+                'form'     => $form->createView(),
+                'etudiant' => $etudiant
+            ]);
+        }
+
         $em->persist($visite);
         $em->flush();
 

@@ -1,27 +1,15 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
+<h1>Ajouter un étudiant</h1>
 
-<h2 class="mb-4">Ajouter un étudiant</h2>
+<div class="card p-4 shadow-sm">
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.formation) }}
 
-<form method="post" action="/etudiants/new" class="w-50">
-
-    <div class="mb-3">
-        <label class="form-label">Nom</label>
-        <input type="text" name="nom" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Prénom</label>
-        <input type="text" name="prenom" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Formation</label>
-        <input type="text" name="formation" class="form-control" required>
-    </div>
-
-    <button class="btn btn-success">Enregistrer</button>
-</form>
-
+        <button class="btn btn-primary">Enregistrer</button>
+    {{ form_end(form) }}
+</div>
 {% endblock %}

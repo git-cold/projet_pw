@@ -22,10 +22,10 @@
                 <td>{{ e.formation }}</td>
                 <td>
                     <a class="btn btn-primary btn-sm" href="/etudiants/{{ e.id }}/visites">Voir visites</a>
-                    <a class="btn btn-success btn-sm" href="/visites/{{ e.id }}/new">Ajouter visite</a>
-                    <a class="btn btn-warning btn-sm" href="/etudiants/edit/{{ e.id }}">Modifier</a>
+                    <a class="btn btn-success btn-sm" href="/etudiants/{{ e.id }}/visites/new">Ajouter visite</a>
+                    <a class="btn btn-warning btn-sm" href="/etudiants/{{ e.id }}/edit">Modifier</a>
                     
-                    <form method="post" action="/etudiants/delete/{{ e.id }}" class="d-inline">
+                    <form method="post" action="/etudiants/{{ e.id }}/delete" class="d-inline">
                         <button class="btn btn-danger btn-sm">Supprimer</button>
                     </form>
                 </td>

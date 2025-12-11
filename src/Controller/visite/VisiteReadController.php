@@ -35,7 +35,7 @@ class VisiteReadController extends AbstractController
         // Repository custom
         $visites = $visiteRepo->findByEtudiantFiltered($id, $statut, $tri);
 
-        return $this->render('read_visite.html.twig', [
+        return $this->render('visite/read_visite.html.twig', [
             'etudiant' => $etudiant,
             'visites' => $visites,
             'statut' => $statut,

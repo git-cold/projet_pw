@@ -40,8 +40,15 @@ Accéder à l’interface web Symfony via :
 
 Un tuteur administrateur est généré lors du chargement des Fixtures :
 
-* **Email :** `admin@example.com`
-* **Mot de passe :** `password`
+* **Email :** 
+```
+admin@example.com
+```
+
+* **Mot de passe :** 
+```
+password
+```
 
 Ces informations proviennent de la fixture suivante :
 

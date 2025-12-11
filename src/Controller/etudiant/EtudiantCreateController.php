@@ -3,6 +3,7 @@
 namespace App\Controller\etudiant;
 
 use App\Entity\Etudiant;
+use App\Form\EtudiantType;
 use App\Repository\TuteurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,21 +13,28 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class EtudiantCreateController extends AbstractController
 {
-    public function index(SessionInterface $session): Response {
+    // GET : afficher le formulaire
+    public function index(
+        SessionInterface $session
+    ): Response {
         if (!$session->get('tuteur_id')) {
             return $this->redirect('/login');
         }
 
-        return $this->render('etudiant/create_etudiant.html.twig');
+        $form = $this->createForm(EtudiantType::class);
+
+        return $this->render('etudiant/create_etudiant.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
+    // POST : traiter le formulaire
     public function submit(
         Request $request,
         SessionInterface $session,
         TuteurRepository $tuteurRepo,
         EntityManagerInterface $em
     ): Response {
-        // Vérifier connexion
         $tuteurId = $session->get('tuteur_id');
         if (!$tuteurId) {
             return $this->redirect('/login');
@@ -34,22 +42,22 @@ class EtudiantCreateController extends AbstractController
 
         $tuteurConnecte = $tuteurRepo->find($tuteurId);
 
-        // Récupération POST
-        $nom = $request->request->get('nom');
-        $prenom = $request->request->get('prenom');
-        $formation = $request->request->get('formation');
-
-        // Création
         $etudiant = new Etudiant();
-        $etudiant->setNom($nom);
-        $etudiant->setPrenom($prenom);
-        $etudiant->setFormation($formation);
+        $form = $this->createForm(EtudiantType::class, $etudiant);
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->render('etudiant/create_etudiant.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+
         $etudiant->setTuteur($tuteurConnecte);
 
-        // Sauvegarde
         $em->persist($etudiant);
         $em->flush();
 
         return $this->redirect('/etudiants');
+
     }
 }

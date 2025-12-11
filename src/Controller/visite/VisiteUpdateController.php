@@ -2,6 +2,8 @@
 
 namespace App\Controller\visite;
 
+use App\Entity\Visite;
+use App\Form\VisiteType;
 use App\Repository\VisiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,24 +18,24 @@ class VisiteUpdateController extends AbstractController
         SessionInterface $session,
         VisiteRepository $repo
     ): Response {
-        // Vérif connexion
         $tuteurId = $session->get('tuteur_id');
         if (!$tuteurId) {
             return $this->redirect('/login');
         }
 
-        // Récupérer visite
         $visite = $repo->find($id);
-
-        // Vérif qu'elle existe et qu'elle appartient au tuteur connecté
         if (!$visite || $visite->getTuteur()->getId() !== $tuteurId) {
             return $this->redirect('/etudiants');
         }
 
+        $form = $this->createForm(VisiteType::class, $visite);
+
         return $this->render('visite/update_visite.html.twig', [
+            'form'   => $form->createView(),
             'visite' => $visite
         ]);
     }
+
 
     public function submit(
         int $id,
@@ -42,37 +44,29 @@ class VisiteUpdateController extends AbstractController
         VisiteRepository $repo,
         EntityManagerInterface $em
     ): Response {
-        // Vérif connexion
         $tuteurId = $session->get('tuteur_id');
         if (!$tuteurId) {
             return $this->redirect('/login');
         }
 
-        // Récup visite
         $visite = $repo->find($id);
-
         if (!$visite || $visite->getTuteur()->getId() !== $tuteurId) {
             return $this->redirect('/etudiants');
         }
 
-        // Récupération des données POST
-        $date = $request->request->get('date');
-        $commentaire = $request->request->get('commentaire');
-        $statut = $request->request->get('statut');
+        $form = $this->createForm(VisiteType::class, $visite);
+        $form->handleRequest($request);
 
-        // Sécurisation du statut
-        if (!in_array($statut, ['prévue', 'réalisée', 'annulée'])) {
-            $statut = 'prévue';
+        // inversion des conditions
+        if (!($form->isSubmitted() && $form->isValid())) {
+            return $this->render('visite/update_visite.html.twig', [
+                'form'   => $form->createView(),
+                'visite' => $visite
+            ]);
         }
-
-        // Mise à jour
-        $visite->setDate(new \DateTimeImmutable($date));
-        $visite->setCommentaire($commentaire);
-        $visite->setStatut($statut);
 
         $em->flush();
 
-        // Rediriger vers les visites de l’étudiant
         $etudiantId = $visite->getEtudiant()->getId();
         return $this->redirect("/etudiants/$etudiantId/visites");
     }

@@ -65,8 +65,8 @@
             </td>
             <td>{{ v.compteRendu ?: '-' }}</td>
             <td>
-                <a class="btn btn-sm btn-warning" href="/visites/{{ v.id }}/edit">Modifier</a>
-                <a class="btn btn-sm btn-danger" href="/visites/{{ v.id }}/delete">Supprimer</a>
+                <a class="btn btn-sm btn-warning" href="/etudiants/{{ v.id }}/visites/edit">Modifier</a>
+                <a class="btn btn-sm btn-danger" href="/etudiants/{{ v.id }}/visites/delete">Supprimer</a>
             </td>
         </tr>
         {% else %}
@@ -79,7 +79,7 @@
     </tbody>
 </table>
 
-<a class="btn btn-success" href="/visites/new/{{ etudiant.id }}">
+<a class="btn btn-success" href="/etudiants/{{ etudiant.id }}/visites/new">
     Ajouter une visite
 </a>
 
