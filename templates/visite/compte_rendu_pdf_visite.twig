@@ -1,0 +1,11 @@
+<h2 class="mb-4">Compte-rendu de visite</h2>
+
+<p><strong>Étudiant :</strong> {{ visite.etudiant.prenom }} {{ visite.etudiant.nom }}</p>
+<p><strong>Date :</strong> {{ visite.date|date('d/m/Y H:i') }}</p>
+<p><strong>Statut :</strong> {{ visite.statut }}</p>
+
+<h4 class="mt-4">Commentaire initial</h4>
+<p>{{ visite.commentaire }}</p>
+
+<h4 class="mt-4">Compte-rendu</h4>
+<p>{{ visite.compteRendu }}</p>

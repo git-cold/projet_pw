@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+<h2 class="mb-4">Liste des étudiants</h2>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Formation</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for e in etudiants %}
+            <tr>
+                <td>{{ e.nom }}</td>
+                <td>{{ e.prenom }}</td>
+                <td>{{ e.formation }}</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/etudiants/{{ e.id }}/visites">Voir visites</a>
+                    <a class="btn btn-success btn-sm" href="/visites/{{ e.id }}/new">Ajouter visite</a>
+                    <a class="btn btn-warning btn-sm" href="/etudiants/edit/{{ e.id }}">Modifier</a>
+                    
+                    <form method="post" action="/etudiants/delete/{{ e.id }}" class="d-inline">
+                        <button class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center text-muted">Aucun étudiant</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a class="btn btn-success" href="/etudiants/new">Ajouter un étudiant</a>
+
+{% endblock %}

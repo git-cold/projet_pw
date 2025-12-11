@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+<h2 class="mb-4">Modifier la visite</h2>
+
+<form method="post" action="/visites/{{ visite.id }}/edit" class="w-50">
+
+    <div class="mb-3">
+        <label class="form-label">Date</label>
+        <input type="datetime-local"
+               class="form-control"
+               name="date"
+               value="{{ visite.date|date('Y-m-d\\TH:i') }}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Commentaire</label>
+        <textarea name="commentaire" class="form-control" required>{{ visite.commentaire }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Statut</label>
+        <select name="statut" class="form-select" required>
+            <option value="prévue"   {% if visite.statut == 'prévue' %}selected{% endif %}>Prévue</option>
+            <option value="réalisée" {% if visite.statut == 'réalisée' %}selected{% endif %}>Réalisée</option>
+            <option value="annulée"  {% if visite.statut == 'annulée' %}selected{% endif %}>Annulée</option>
+        </select>
+    </div>
+
+    <button class="btn btn-primary">Enregistrer</button>
+
+</form>
+
+{% endblock %}

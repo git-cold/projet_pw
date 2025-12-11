@@ -1,0 +1,86 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Visites{% endblock %}
+
+{% block body %}
+
+<h2 class="mb-4">
+    Visites de {{ etudiant.prenom }} {{ etudiant.nom }}
+</h2>
+
+<div class="card p-3 mb-4">
+
+    <form method="get" action="/etudiants/{{ etudiant.id }}/visites" class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">Statut :</label>
+            <select name="statut" class="form-select">
+                <option value="toutes"   {% if statut == 'toutes' %}selected{% endif %}>Toutes</option>
+                <option value="prévue"   {% if statut == 'prévue' %}selected{% endif %}>Prévue</option>
+                <option value="réalisée" {% if statut == 'réalisée' %}selected{% endif %}>Réalisée</option>
+                <option value="annulée"  {% if statut == 'annulée' %}selected{% endif %}>Annulée</option>
+            </select>
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-primary w-100">Filtrer</button>
+        </div>
+
+        <div class="col-md-6 d-flex align-items-end">
+            <div>
+                <a class="btn btn-link" href="/etudiants/{{ etudiant.id }}/visites?statut={{ statut }}&tri=asc">
+                    Trier ↑
+                </a>
+                <a class="btn btn-link" href="/etudiants/{{ etudiant.id }}/visites?statut={{ statut }}&tri=desc">
+                    Trier ↓
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            <th>Commentaire</th>
+            <th>Statut</th>
+            <th>Compte-rendu</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for v in visites %}
+        <tr>
+            <td>{{ v.date|date('d/m/Y H:i') }}</td>
+            <td>{{ v.commentaire }}</td>
+            <td>
+                {% if v.statut == 'prévue' %}
+                    <span class="badge bg-warning text-dark">Prévue</span>
+                {% elseif v.statut == 'réalisée' %}
+                    <span class="badge bg-success">Réalisée</span>
+                {% elseif v.statut == 'annulée' %}
+                    <span class="badge bg-danger">Annulée</span>
+                {% endif %}
+            </td>
+            <td>{{ v.compteRendu ?: '-' }}</td>
+            <td>
+                <a class="btn btn-sm btn-warning" href="/visites/{{ v.id }}/edit">Modifier</a>
+                <a class="btn btn-sm btn-danger" href="/visites/{{ v.id }}/delete">Supprimer</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-center text-muted">
+                Aucune visite planifiée
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a class="btn btn-success" href="/visites/new/{{ etudiant.id }}">
+    Ajouter une visite
+</a>
+
+{% endblock %}

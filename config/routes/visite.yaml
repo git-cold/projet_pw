@@ -1,0 +1,46 @@
+read_visites_index:
+  path: /etudiants/{id}/visites
+  controller: App\Controller\visite\VisiteReadController::index
+  methods: [GET]
+
+
+create_visite_index:
+  path: /etudiants/{id}/visites/new
+  controller: App\Controller\visite\VisiteCreateController::index
+  methods: [GET]
+create_visite_submit:
+  path: /etudiants/{id}/visites/new
+  controller: App\Controller\visite\VisiteCreateController::submit
+  methods: [POST]
+
+
+update_visite_index:
+  path: /visites/{id}/edit
+  controller: App\Controller\visite\VisiteUpdateController::index
+  methods: [GET]
+update_visite_submit:
+  path: /visites/{id}/edit
+  controller: App\Controller\visite\VisiteUpdateController::submit
+  methods: [POST]
+
+
+delete_visite:
+  path: /visites/{id}/delete
+  controller: App\Controller\visite\VisiteDeleteController::delete
+  methods: [GET]
+
+
+compte_rendu_visite_index:
+  path: /visites/{id}/compte-rendu
+  controller: App\Controller\visite\VisiteCompteRenduController::index
+  methods: [GET]
+compte_rendu_visite_submit:
+  path: /visites/{id}/compte-rendu
+  controller: App\Controller\visite\VisiteCompteRenduController::submit
+  methods: [POST]
+
+
+compte_rendu_pdf_visite_submit:
+  path: /visites/{id}/compte-rendu/pdf
+  controller: App\Controller\visite\VisiteCompteRenduPDFController::index
+  methods: [GET]

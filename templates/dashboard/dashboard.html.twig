@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="card p-3 mb-4">
+    <h4 class="mb-2">Tuteur connecté</h4>
+    <p class="mb-0">
+        <strong>{{ tuteur.prenom }} {{ tuteur.nom }}</strong><br>
+        {{ tuteur.email }}
+    </p>
+</div>
+
+<div class="card p-3 mb-4">
+    <h4>Étudiants suivis</h4>
+    <ul class="list-group">
+        {% for e in etudiants %}
+            <li class="list-group-item">{{ e.prenom }} {{ e.nom }}</li>
+        {% else %}
+            <li class="list-group-item text-muted">Aucun étudiant</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card p-3 mb-4">
+    <h4>Prochaines visites</h4>
+    <ul class="list-group">
+        {% for v in visites %}
+            <li class="list-group-item">
+                <strong>{{ v.date|date('d/m/Y H:i') }}</strong> — {{ v.commentaire }}
+            </li>
+        {% else %}
+            <li class="list-group-item text-muted">Aucune visite</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<a class="btn btn-success" href="/etudiants/new">Ajouter un étudiant</a>
+
+{% endblock %}

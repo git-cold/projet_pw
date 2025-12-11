@@ -1,0 +1,40 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+
+<h2 class="mb-4">Compte-rendu de la visite</h2>
+
+<div class="card p-3 mb-4">
+
+    <p><strong>Étudiant :</strong> {{ visite.etudiant.prenom }} {{ visite.etudiant.nom }}</p>
+    <p><strong>Date :</strong> {{ visite.date|date('d/m/Y H:i') }}</p>
+    <p><strong>Commentaire initial :</strong> {{ visite.commentaire }}</p>
+    <p><strong>Statut :</strong>
+        {% if visite.statut == 'prévue' %}
+            <span class="badge bg-warning text-dark">Prévue</span>
+        {% elseif visite.statut == 'réalisée' %}
+            <span class="badge bg-success">Réalisée</span>
+        {% else %}
+            <span class="badge bg-danger">Annulée</span>
+        {% endif %}
+    </p>
+
+</div>
+
+<form method="post" action="/visites/{{ visite.id }}/compte-rendu" class="w-75">
+
+    <div class="mb-3">
+        <label class="form-label">Compte-rendu :</label>
+        <textarea name="compteRendu" class="form-control" rows="8" required>{{ visite.compteRendu }}</textarea>
+    </div>
+
+    <button class="btn btn-primary">Enregistrer</button>
+</form>
+
+<br>
+
+<a class="btn btn-secondary mt-3" href="/visites/{{ visite.id }}/compte-rendu/pdf" target="_blank">
+    Exporter en PDF
+</a>
+
+{% endblock %}

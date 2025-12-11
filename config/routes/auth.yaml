@@ -1,0 +1,14 @@
+login_index:
+  path: /login
+  controller: App\Controller\auth\LoginController::index
+  methods: [GET]
+login_submit:
+  path: /login
+  controller: App\Controller\auth\LoginController::submit
+  methods: [POST]
+
+
+logout_index:
+  path: /logout
+  controller: App\Controller\auth\LogoutController::logout
+  methods: [POST]

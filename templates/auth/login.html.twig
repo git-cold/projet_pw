@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+
+        <h2 class="text-center mb-4">Connexion</h2>
+
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="post" action="/login">
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input class="form-control" type="email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mot de passe</label>
+                <input class="form-control" type="password" name="password" required>
+            </div>
+
+            <button class="btn btn-primary w-100">Se connecter</button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

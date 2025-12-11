@@ -1,0 +1,32 @@
+read_etudiant_index:
+  path: /etudiants
+  controller: App\Controller\etudiant\EtudiantReadController::index
+  methods: [GET]
+
+
+create_etudiant_index:
+  path: /etudiants/new
+  controller: App\Controller\etudiant\EtudiantCreateController::index
+  methods: [GET]
+create_etudiant_submit:
+  path: /etudiants/new
+  controller: App\Controller\etudiant\EtudiantCreateController::submit
+  methods: [POST]
+
+
+update_etudiant_index:
+  path: /etudiants/{id}/edit
+  controller: App\Controller\etudiant\EtudiantUpdateController::index
+  methods: [GET]
+update_etudiant_submit:
+  path: /etudiants/{id}/edit
+  controller: App\Controller\etudiant\EtudiantUpdateController::submit
+  methods: [POST]
+
+
+delete_etudiant_post:
+  path: /etudiants/{id}/delete
+  controller: App\Controller\etudiant\EtudiantDeleteController::delete
+  methods: [POST]
+
+

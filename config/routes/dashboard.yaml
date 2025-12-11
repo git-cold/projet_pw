@@ -1,0 +1,4 @@
+dashboard_page:
+  path: /dashboard
+  controller: App\Controller\dashboard\DashboardController::index
+  methods: [GET]
