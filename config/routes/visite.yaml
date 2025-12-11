@@ -38,9 +38,7 @@ compte_rendu_visite_submit:
   path: /visites/{id}/compte-rendu
   controller: App\Controller\visite\VisiteCompteRenduController::submit
   methods: [POST]
-
-
-compte_rendu_pdf_visite_submit:
+compte_rendu_visite_pdf:
   path: /visites/{id}/compte-rendu/pdf
-  controller: App\Controller\visite\VisiteCompteRenduPDFController::index
+  controller: App\Controller\visite\VisiteCompteRenduController::pdf
   methods: [GET]

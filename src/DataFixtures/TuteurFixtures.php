@@ -14,7 +14,10 @@ class TuteurFixtures extends Fixture
         $tuteur->setPrenom('Super');
         $tuteur->setEmail('admin@example.com');
         $tuteur->setTelephone('0600000000');
-        $tuteur->setPassword('password'); 
+
+        // Mot de passe hashé
+        $hashedPassword = password_hash('password', PASSWORD_DEFAULT);
+        $tuteur->setPassword($hashedPassword);
 
         $manager->persist($tuteur);
         $manager->flush();

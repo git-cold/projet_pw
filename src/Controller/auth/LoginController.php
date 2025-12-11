@@ -23,12 +23,22 @@ class LoginController extends AbstractController
         $password = $request->request->get('password');
 
         $tuteur = $repo->findOneBy(['email' => $email]);
-        
-        if (! $tuteur) {  return $this->render('login.html.twig', [ 'error' => 'Identifiants incorrects']); }
-        if ($tuteur->getPassword() !== $password) { return $this->render('login.html.twig', [ 'error' => 'Mot de passe incorrects']); }
+
+        if (! $tuteur) {
+            return $this->render('auth/login.html.twig', [
+                'error' => 'Identifiants incorrects'
+            ]);
+        }
+
+        // Vérification du hash
+        if (! password_verify($password, $tuteur->getPassword())) {
+            return $this->render('auth/login.html.twig', [
+                'error' => 'Mot de passe incorrect'
+            ]);
+        }
 
         $session->set('tuteur_id', $tuteur->getId());
-        
+
         return $this->redirect('/dashboard');
     }
 }

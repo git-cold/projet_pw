@@ -71,24 +71,21 @@ class VisiteCompteRenduController extends AbstractController
             return $this->redirect('/etudiants');
         }
 
-        // HTML du PDF
-        $html = $this->renderView('compte_rendu_pdf_visite.html.twig', [
+        $html = $this->renderView('visite/compte_rendu_visite_pdf.html.twig', [
             'visite' => $visite
         ]);
 
-        // Config DOMPDF
         $options = new Options();
         $options->set('defaultFont', 'Helvetica');
         $dompdf = new Dompdf($options);
-
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        return new Response(
-            $dompdf->stream("compte_rendu_visite_$id.pdf", ["Attachment" => true]),
-            200,
-            ['Content-Type' => 'application/pdf']
-        );
+        $dompdf->stream('visite_'.$id.'.pdf', [
+            "Attachment" => true
+        ]);
+
+        exit;
     }
 }
